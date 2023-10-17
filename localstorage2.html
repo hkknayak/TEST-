@@ -1,1 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Details</title>
+</head>
+<body>
+  <h1>User Details Form</h1>
+  <label for="name">Name:</label>
+  <input type="text" id="name">
+  <br>
+  <label for="email">Email:</label>
+  <input type="email" id="email">
+  <br>
+  <label for="phone">Phone:</label>
+  <input type="text" id="phone">
+  <br>
+  <button onclick="saveUserDetails()">Submit</button>
+
+  <h2>User Details:</h2>
+  <div id="userDetails"></div>
+
+  <script>
+    function saveUserDetails() {
+ 
+  var name = document.getElementById('name').value;
+  var email = document.getElementById('email').value;
+  var phone = document.getElementById('phone').value;
+
+ 
+  var user = {
+    name: name,
+    email: email,
+    phone: phone
+  };
+
+ 
+  var userJSON = JSON.stringify(user);
+
+ 
+  localStorage.setItem('user', userJSON);
+
+ 
+  var userDetailsDiv = document.getElementById('userDetails');
+  userDetailsDiv.innerHTML = `
+    <strong>Name:</strong> ${user.name} <br>
+    <strong>Email:</strong> ${user.email} <br>
+    <strong>Phone:</strong> ${user.phone}
+  `;
+}
+  </script>
+</body>
+</html>
 
