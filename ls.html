@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Details Storage</title>
+</head>
+<body>
+  <h1>User Details Storage</h1>
+  <label for="name">Name:</label>
+  <input type="text" id="name">
+  <br>
+  <label for="email">Email:</label>
+  <input type="email" id="email">
+  <br>
+  <button onclick="saveUserDetails()">Save User Details</button>
+
+  <script>
+    function saveUserDetails() {
+ 
+  var name = document.getElementById('name').value;
+  var email = document.getElementById('email').value;
+
+  var user = {
+    name: name,
+    email: email
+  };
+
+ 
+  var userJSON = JSON.stringify(user);
+
+
+  localStorage.setItem('user', userJSON);
+
+  alert('User details saved!');
+}
+  </script>
+</body>
+</html>
 
