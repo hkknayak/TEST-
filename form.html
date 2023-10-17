@@ -1,1 +1,34 @@
+<form class="form-inline mb-3" id="item-form">
+  <input type="text" class="form-control mr-2" id="item-input">
+  <input type="submit" class="btn btn-dark" value="Submit">
+</form>
+<script>
+  var form = document.getElementById('item-form');
+  var itemInput = document.getElementById('item-input');
 
+ 
+  form.addEventListener('submit', function(event) {
+ 
+    event.preventDefault();
+
+  
+    var newItem = itemInput.value.trim();
+
+  
+    if (newItem !== '') {
+    
+      var items = JSON.parse(localStorage.getItem('items')) || [];
+
+   
+      items.push(newItem);
+
+    
+      localStorage.setItem('items', JSON.stringify(items));
+
+    
+      itemInput.value = '';
+
+   
+    }
+  });
+</script>
