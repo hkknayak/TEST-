@@ -1,1 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Form</title>
+    <style>
+        .user-info {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="form-container">
+        <h2>User Information Form</h2>
+        <form id="user-form">
+            <div class="user-info">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="user-info">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="user-info">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="user-data">
+        <h2>User Information</h2>
+        <ul id="user-list"></ul>
+    </div>
+
+    <script>
+        document.getElementById('user-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            const user = {
+                name: name,
+                email: email,
+                phone: phone
+            };
+
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            users.push(user);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            displayUserData();
+
+            document.getElementById('user-form').reset();
+        });
+
+        function editUser(index) {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            const userToEdit = users[index];
+            document.getElementById('name').value = userToEdit.name;
+            document.getElementById('email').value = userToEdit.email;
+            document.getElementById('phone').value = userToEdit.phone;
+            deleteUser(index);
+        }
+
+        function deleteUser(index) {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            users.splice(index, 1);
+            localStorage.setItem('users', JSON.stringify(users));
+            displayUserData();
+        }
+
+        function setupEditButtons() {
+            const editButtons = document.querySelectorAll('.edit-button');
+            editButtons.forEach(function (button, index) {
+                button.addEventListener('click', function () {
+                    editUser(index);
+                });
+            });
+        }
+
+        function displayUserData() {
+            const userList = document.getElementById('user-list');
+            userList.innerHTML = '';
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+
+            users.forEach(function (user, index) {
+                const listItem = document.createElement('li');
+                listItem.className = 'user-info';
+                listItem.innerHTML = `${user.name}, ${user.email}, ${user.phone} 
+                    <button class="edit-button">Edit</button>
+                    <button class="delete-button" onclick="deleteUser(${index})">Delete</button>`;
+                userList.appendChild(listItem);
+            });
+
+            setupEditButtons();
+        }
+
+        window.onload = function () {
+            displayUserData();
+            setupEditButtons();
+        };
+    </script>
+</body>
+
+</html>
 
